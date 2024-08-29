@@ -8,12 +8,12 @@ import re
 from typing import List
 
 
-def filter_datum(
-            fields: List[str], redaction: str, message: str, separator: str
-        ) -> str:
-    """Obfuscates fields in a log message."""
-    pattern = f'({"|".join(fields)})=[^{separator}]*'
-    return re.sub(pattern, lambda m: f"{m.group(1)}={redaction}", message)
+def filter_datum(fields: List[str], redaction: str, message: str,
+                 separator: str) -> str:
+    """"Redacting Formatter class"""
+    for f in fields:
+        message = re.sub(f'{f}=[^{separator}]*', f'{f}={redaction}', message)
+    return message
 
 
 class RedactingFormatter(logging.Formatter):
