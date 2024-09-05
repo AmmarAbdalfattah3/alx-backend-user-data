@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """ Module of Users views
 """
+
+
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models.user import User
@@ -16,18 +18,20 @@ def view_all_users() -> str:
     return jsonify(all_users)
 
 
-@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+@app_views.route(
+            '/users/<user_id>', methods=['GET'], strict_slashes=False
+        )
 def view_one_user(user_id: str = None) -> str:
     """ GET /api/v1/users/:id
     Path parameter:
-      - User ID
+      - User ID or 'me'
     Return:
       - User object JSON represented
       - 404 if the User ID doesn't exist
     """
-    if user_id == 'me':
+    if user_id == "me":
         if request.current_user is None:
-            abort(401)
+            abort(404)
         return jsonify(request.current_user.to_json())
 
     user = User.get(user_id)
@@ -36,13 +40,27 @@ def view_one_user(user_id: str = None) -> str:
     return jsonify(user.to_json())
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/users/me', methods=['GET'], strict_slashes=False)
+def view_authenticated_user() -> str:
+    """ GET /api/v1/users/me
+    Return:
+      - the authenticated User object JSON represented
+      - 404 if no user is authenticated
+    """
+    if request.current_user is None:
+        abort(404)
+    return jsonify(request.current_user.to_json())
+
+
+@app_views.route(
+            '/users/<user_id>', methods=['DELETE'], strict_slashes=False
+        )
 def delete_user(user_id: str = None) -> str:
     """ DELETE /api/v1/users/:id
     Path parameter:
       - User ID
     Return:
-      - empty JSON is the User has been correctly deleted
+      - empty JSON if the User has been correctly deleted
       - 404 if the User ID doesn't exist
     """
     if user_id is None:
@@ -54,7 +72,9 @@ def delete_user(user_id: str = None) -> str:
     return jsonify({}), 200
 
 
-@app_views.route('/users', methods=['POST'], strict_slashes=False)
+@app_views.route(
+            '/users', methods=['POST'], strict_slashes=False
+        )
 def create_user() -> str:
     """ POST /api/v1/users/
     JSON body:
@@ -70,7 +90,7 @@ def create_user() -> str:
     error_msg = None
     try:
         rj = request.get_json()
-    except Exception as e:
+    except Exception:
         rj = None
     if rj is None:
         error_msg = "Wrong format"
@@ -92,7 +112,9 @@ def create_user() -> str:
     return jsonify({'error': error_msg}), 400
 
 
-@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route(
+            '/users/<user_id>', methods=['PUT'], strict_slashes=False
+        )
 def update_user(user_id: str = None) -> str:
     """ PUT /api/v1/users/:id
     Path parameter:
@@ -113,7 +135,7 @@ def update_user(user_id: str = None) -> str:
     rj = None
     try:
         rj = request.get_json()
-    except Exception as e:
+    except Exception:
         rj = None
     if rj is None:
         return jsonify({'error': "Wrong format"}), 400
