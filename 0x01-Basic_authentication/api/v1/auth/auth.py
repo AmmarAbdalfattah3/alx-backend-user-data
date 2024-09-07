@@ -45,7 +45,9 @@ class Auth:
 
         return True
 
-    def authorization_header(self, request: Optional[Request]=None) -> Optional[str]:
+    def authorization_header(
+                self, request: Optional[Request] = None
+            ) -> Optional[str]:
         """
         Retrieves the Authorization header from the request.
 
@@ -53,13 +55,16 @@ class Auth:
             request: The Flask request object (optional).
 
         Returns:
-            str: None for now, since no authorization header is processed.
+            str: None for now, since no authorization
+            header is processed.
         """
         if request is None:
             return None
         return request.headers.get('Authorization')
 
-    def current_user(self, request: Optional[Request]= None) -> Optional[User]:
+    def current_user(
+                self, request: Optional[Request] = None
+            ) -> Optional[User]:
         """
         Retrieves the current user from the request.
 
