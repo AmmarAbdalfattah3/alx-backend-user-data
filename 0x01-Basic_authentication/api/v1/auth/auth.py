@@ -22,6 +22,14 @@ class Auth:
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
         Determines if authentication is required for a given path.
+
+        Args:
+            path (str): The path to check for authentication.
+            excluded_paths (List[str]): A list of paths
+            that do not require authentication.
+
+        Returns:
+            bool: False for now, as authentication is not yet required.
         """
         if path is None:
             return True
@@ -38,11 +46,27 @@ class Auth:
         return True
 
     def authorization_header(self, request: Request = None) -> str:
-        """Return the authorization header"""
+        """
+        Retrieves the Authorization header from the request.
+
+        Args:
+            request: The Flask request object (optional).
+
+        Returns:
+            str: None for now, since no authorization header is processed.
+        """
         if request is None:
             return None
         return request.headers.get('Authorization')
 
     def current_user(self, request: Request = None) -> User:
-        """Return the current user"""
+        """
+        Retrieves the current user from the request.
+
+        Args:
+            request: The Flask request object (optional).
+
+        Returns:
+            TypeVar('User'): None for now, as no user is identified yet.
+        """
         return None
