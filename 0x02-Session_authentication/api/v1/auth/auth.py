@@ -4,7 +4,7 @@
 
 
 from typing import List, TypeVar
-from flask import Request
+from flask import request
 
 
 User = TypeVar('User')
@@ -29,12 +29,12 @@ class Auth:
 
         return True
 
-    def authorization_header(self, request: Request = None) -> str:
+    def authorization_header(self, request=None) -> str:
         """Return the authorization header"""
         if request is None:
             return None
         return request.headers.get('Authorization')
 
-    def current_user(self, request: Request = None) -> User:
+    def current_user(self, request=None) -> User:
         """Return the current user"""
         return None
