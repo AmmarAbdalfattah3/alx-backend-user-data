@@ -64,7 +64,7 @@ class Auth:
         return request.headers.get('Authorization')
 
     def current_user(
-                self, request: Optional[Request] = None
+                self, request=None
             ) -> Optional[User]:
         """
         Retrieves the current user from the request.
