@@ -45,7 +45,7 @@ class Auth:
 
         return True
 
-    def authorization_header(self, request: Request = None) -> str:
+    def authorization_header(self, request=None) -> str:
         """
         Retrieves the Authorization header from the request.
 
@@ -59,7 +59,7 @@ class Auth:
             return None
         return request.headers.get('Authorization')
 
-    def current_user(self, request: Request = None) -> User:
+    def current_user(self, request = None) -> User:
         """
         Retrieves the current user from the request.
 
