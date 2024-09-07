@@ -5,7 +5,7 @@ This is the template for all authentication systems.
 """
 
 
-from typing import List, TypeVar, Optional
+from typing import List, TypeVar, Optional, Request
 from flask import request
 
 
