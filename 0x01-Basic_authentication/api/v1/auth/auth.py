@@ -33,15 +33,16 @@ class Auth:
         """
         if path is None:
             return True
-
-        if not excluded_paths or len(excluded_paths) == 0:
+        if excluded_paths is None or not excluded_paths:
             return True
 
-        if not path.endswith('/'):
-            path += '/'
+        # Normalize path by removing trailing slashes for comparison
+        normalized_path = path.rstrip('/')
 
-        if path in excluded_paths:
-            return False
+        for excluded_path in excluded_paths:
+            normalized_excluded_path = excluded_path.rstrip('/')
+            if normalized_path.startswith(normalized_excluded_path):
+                return False
 
         return True
 
