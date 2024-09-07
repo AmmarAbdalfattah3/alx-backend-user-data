@@ -6,7 +6,7 @@ This is the template for all authentication systems.
 
 
 from typing import List, TypeVar, Optional
-from flask import Request
+from flask import request
 
 
 User = TypeVar('User')
