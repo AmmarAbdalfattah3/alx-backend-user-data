@@ -5,7 +5,7 @@ This is the template for all authentication systems.
 """
 
 
-from typing import List, TypeVar, Optional, Request
+from typing import List, TypeVar, Optional
 from flask import request
 
 
@@ -47,7 +47,7 @@ class Auth:
         return True
 
     def authorization_header(
-                self, request: Optional[Request] = None
+                self, request=None
             ) -> Optional[str]:
         """
         Retrieves the Authorization header from the request.
