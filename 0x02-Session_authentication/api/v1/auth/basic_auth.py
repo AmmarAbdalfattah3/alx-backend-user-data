@@ -2,6 +2,8 @@
 """BasicAuth module
 """
 
+import binascii
+from base64 import b64decode
 from api.v1.auth.auth import Auth
 from models.user import User
 from typing import Optional, Tuple
