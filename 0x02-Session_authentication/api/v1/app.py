@@ -55,7 +55,8 @@ def before_request():
     excluded_paths = [
                 '/api/v1/status/',
                 '/api/v1/unauthorized/',
-                '/api/v1/forbidden/'
+                '/api/v1/forbidden/',
+                '/api/v1/users/me'
             ]
     if not auth.require_auth(request.path, excluded_paths):
         return
@@ -64,8 +65,8 @@ def before_request():
         abort(401)
 
     request.current_user = auth.current_user(request)
-    if auth.current_user(request) is None:
-        abort(403)
+    if auth.current_user is None:
+        abort(404)
 
 
 if __name__ == "__main__":
