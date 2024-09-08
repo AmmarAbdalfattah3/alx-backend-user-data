@@ -52,6 +52,8 @@ def before_request():
     if auth is None:
         return
 
+    request.current_user = auth.current_user(request)
+
     excluded_paths = [
                 '/api/v1/status/',
                 '/api/v1/unauthorized/',
@@ -64,7 +66,6 @@ def before_request():
     if auth.authorization_header(request) is None:
         abort(401)
 
-    request.current_user = auth.current_user(request)
     if request.current_user is None:
         abort(403)
 
