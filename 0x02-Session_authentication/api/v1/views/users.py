@@ -16,9 +16,10 @@ def view_all_users() -> str:
     Return:
       - list of all User objects JSON represented
     """
+    if request.current_user is None:
+        abort(403)
     all_users = [user.to_json() for user in User.all()]
     return jsonify(all_users)
-
 
 @app_views.route(
             '/api/v1/users/<user_id>', methods=['GET'], strict_slashes=False
