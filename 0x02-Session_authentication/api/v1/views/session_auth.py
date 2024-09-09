@@ -36,7 +36,7 @@ def login():
     if not user:
         return jsonify({"error": "no user found for this email"}), 404
 
-    user = user[0]  # Assuming search returns a list of users, take the first one
+    user = user[0]
 
     # Verify password
     if not user.is_valid_password(password):
