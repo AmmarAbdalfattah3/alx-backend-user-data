@@ -4,7 +4,7 @@
 
 from db import DB
 from user import User
-from bcrypt import hashpw, gensalt
+import bcrypt
 
 
 class Auth:
