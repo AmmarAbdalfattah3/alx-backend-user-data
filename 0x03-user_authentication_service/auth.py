@@ -2,7 +2,9 @@
 """Auth module
 """
 
-import bcrypt
+from db import DB
+from user import User
+from bcrypt import hashpw, gensalt
 
 
 class Auth:
