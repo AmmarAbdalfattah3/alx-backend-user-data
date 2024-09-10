@@ -46,3 +46,25 @@ class DB:
         self._session.add(new_user)
         self._session.commit()
         return new_user
+
+    def find_user_by(self, **kwargs) -> User:
+        """
+        Finds a user by arbitrary keyword arguments.
+
+        Args:
+            **kwargs: Arbitrary keyword arguments for filtering the query.
+
+        Returns:
+            User: The first user matching the filter.
+
+        Raises:
+            NoResultFound: If no user is found.
+            InvalidRequestError: If invalid arguments are passed.
+        """
+        session = self._session
+        try:
+            return session.query(User).filter_by(**kwargs).one()
+        except NoResultFound:
+            raise NoResultFound("No user found")
+        except InvalidRequestError:
+            raise InvalidRequestError("Invalid query arguments")
