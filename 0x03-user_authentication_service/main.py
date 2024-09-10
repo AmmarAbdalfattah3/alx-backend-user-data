@@ -13,3 +13,6 @@ print(user_1.id)
 
 user_2 = my_db.add_user("test1@test.com", "SuperHashedPwd1")
 print(user_2.id)
+
+if __name__ == "__main__":
+    main()
