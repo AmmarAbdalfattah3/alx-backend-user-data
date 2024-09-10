@@ -93,10 +93,3 @@ class DB:
                     raise ValueError(f"Invalid attribute name: {key}")
 
             self._session.commit()
-
-        except NoResultFound:
-            raise NoResultFound(f"No user found with ID {user_id}")
-
-        except Exception as e:
-            self._session.rollback()
-            raise e
