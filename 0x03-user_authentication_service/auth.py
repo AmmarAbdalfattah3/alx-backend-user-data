@@ -11,26 +11,33 @@ from sqlalchemy.orm.exc import NoResultFound
 import bcrypt
 
 
-def _hash_password(self, password: str) -> bytes:
-    """Hash a password using bcrypt.
-
-    Args:
-        password (str): The password to hash.
-
-    Returns:
-        bytes: The salted hash of the password.
-    """
-    password_bytes = password.encode('utf-8')
-    hashed_password = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
-    return hashed_password
-
-
 class Auth:
-    """Auth class to interact with the authentication database.
+    """
+    Auth class to interact with the authentication database.
+    
+    Attributes:
+        _db (DB): Private instance of the DB class
+        used to interact with the database.
     """
 
     def __init__(self):
+        """
+        Initializes the Auth class with a new DB instance.
+        """
         self._db = DB()
+
+    def _hash_password(self, password: str) -> bytes:
+        """Hash a password using bcrypt.
+
+        Args:
+            password (str): The password to hash.
+
+        Returns:
+            bytes: The salted hash of the password.
+        """
+        password_bytes = password.encode('utf-8')
+        hashed_password = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+        return hashed_password
 
     def register_user(self, email: str, password: str) -> User:
         """Register a new user.
@@ -50,10 +57,5 @@ class Auth:
             raise ValueError(f"User {email} already exists")
         except NoResultFound:
             hashed_password = self._hash_password(password)
-            user = self._db.add_user(
-                        email=email,
-                        hashed_password=hashed_password.decode('utf-8')
-                    )
-            return user
-        except InvalidRequestError:
-            raise ValueError("Invalid request")
+            new_user = self._db.add_user(email, hashed_password)
+            return new_user
