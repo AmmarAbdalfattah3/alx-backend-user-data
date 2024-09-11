@@ -17,30 +17,13 @@ class Auth:
         self._db = DB()
 
     def _hash_password(self, password: str) -> str:
-        """Hashes a password using bcrypt."""
-        return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-
-    def register_user(self, email: str, password: str) -> User:
         """
-        Registers a new user with the provided email and password.
+        Hashes the input password using bcrypt with a generated salt.
 
         Args:
-            email (str): The email of the new user.
-            password (str): The password of the new user.
+            password (str): The password string to be hashed.
 
         Returns:
-            User: The newly created User object.
-
-        Raises:
-            ValueError: If a user with the email already exists.
+            bytes: The salted hash of the input password.
         """
-        try:
-            # Check if the user already exists
-            self._db.find_user_by(email=email)
-            # If the above does not raise an exception, user already exists
-            raise ValueError(f"User {email} already exists")
-        except NoResultFound:
-            # User does not exist, proceed with registration
-            hashed_password = self._hash_password(password)
-            new_user = self._db.add_user(email, hashed_password)
-            return new_user
+        return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
