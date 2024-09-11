@@ -18,6 +18,15 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
+    @property
+    def db(self) -> DB:
+        """Get the DB instance.
+
+        Returns:
+            DB: The database instance.
+        """
+        return self._db
+
     def _hash_password(self, password: str) -> bytes:
         """Hash a password using bcrypt
 
