@@ -59,18 +59,20 @@ def login():
     password = request.form.get('password')
 
     if not email or not password:
-        abort(400, description="Missing email or password")
+        abort(400)
 
-    if AUTH.valid_login(email, password):
-        session_id = AUTH.create_session(email)
-        response = jsonify({
-            "email": email,
-            "message": "logged in"
-        })
-        response.set_cookie('session_id', session_id)
-        return response
-    else:
-        abort(401, description="Invalid login credentials")
+    if not AUTH.valid_login(email, password):
+        abort(401)
+
+    session_id = AUTH.create_session(email)
+    if not session_id:
+        abort(401)
+
+    response = make_response(
+        jsonify({"email": email, "message": "logged in"})
+    )
+    response.set_cookie('session_id', session_id)
+    return response
 
 
 if __name__ == "__main__":
