@@ -9,6 +9,17 @@ from user import User
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 import bcrypt
+import uuid
+
+
+def _generate_uuid() -> str:
+    """
+    Generates a new UUID and returns its string representation.
+
+    Returns:
+        str: A string representation of the generated UUID.
+    """
+    return str(uuid.uuid4())
 
 
 class Auth:
@@ -81,4 +92,4 @@ class Auth:
                 return True
         except NoResultFound:
             return False
-        return False
+        return False<F3><F2>
