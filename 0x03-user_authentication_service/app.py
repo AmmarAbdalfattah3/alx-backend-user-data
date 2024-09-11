@@ -55,28 +55,22 @@ def login():
     Returns:
         JSON response: Either a success or error message.
     """
-    # Get email and password from the form data
     email = request.form.get('email')
     password = request.form.get('password')
 
-    # Check if email or password is missing
     if not email or not password:
-        return jsonify({"message": "Missing email or password"}), 400
+        abort(400, description="Missing email or password")
 
-    # Validate login credentials
     if AUTH.valid_login(email, password):
-        # Create a new session and get the session ID
         session_id = AUTH.create_session(email)
-
-        # Create a response with a session_id cookie
-        response = make_response(
-            jsonify({"email": email, "message": "logged in"})
-        )
+        response = jsonify({
+            "email": email,
+            "message": "logged in"
+        })
         response.set_cookie('session_id', session_id)
         return response
     else:
-        # If login fails, return 401 Unauthorized
-        abort(401)
+        abort(401, description="Invalid login credentials")
 
 
 if __name__ == "__main__":
