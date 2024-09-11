@@ -4,11 +4,19 @@ Main file
 """
 from auth import Auth
 
-email = 'bob@bob.com'
-password = 'MyPwdOfBob'
+email = 'me@me.com'
+password = 'mySecuredPwd'
+
 auth = Auth()
 
-auth.register_user(email, password)
+try:
+    user = auth.register_user(email, password)
+    print("successfully created a new user!")
+except ValueError as err:
+    print("could not create a new user: {}".format(err))
 
-print(auth.create_session(email))
-print(auth.create_session("unknown@email.com"))
+try:
+    user = auth.register_user(email, password)
+    print("successfully created a new user!")
+except ValueError as err:
+    print("could not create a new user: {}".format(err))
