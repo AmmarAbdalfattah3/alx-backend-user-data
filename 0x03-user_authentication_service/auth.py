@@ -32,15 +32,6 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    @property
-    def db(self) -> DB:
-        """Get the DB instance.
-
-        Returns:
-            DB: The database instance.
-        """
-        return self._db
-
     def register_user(self, email: str, password: str) -> User:
         """Register a new user.
 
