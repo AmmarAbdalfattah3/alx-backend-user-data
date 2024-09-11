@@ -21,7 +21,7 @@ def _generate_uuid() -> str:
     """
     return str(uuid.uuid4())
 
-def _hash_password(self, password: str) -> bytes:
+def _hash_password(password: str) -> bytes:
         """Hash a password using bcrypt.
 
         Args:
