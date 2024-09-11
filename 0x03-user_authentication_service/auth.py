@@ -11,6 +11,20 @@ from sqlalchemy.orm.exc import NoResultFound
 import bcrypt
 
 
+def _hash_password(self, password: str) -> bytes:
+    """Hash a password using bcrypt.
+
+    Args:
+        password (str): The password to hash.
+
+    Returns:
+        bytes: The salted hash of the password.
+    """
+    password_bytes = password.encode('utf-8')
+    hashed_password = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+    return hashed_password
+
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
@@ -26,21 +40,6 @@ class Auth:
             DB: The database instance.
         """
         return self._db
-
-    def _hash_password(self, password: str) -> bytes:
-        """Hash a password using bcrypt
-
-        Args:
-            password (str): The password to hash
-
-        Returns:
-            bytes: The salted hash of the password
-        """
-        password_bytes = password.encode('utf-8')
-
-        hashed_password = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
-
-        return hashed_password
 
     def register_user(self, email: str, password: str) -> User:
         """Register a new user.
