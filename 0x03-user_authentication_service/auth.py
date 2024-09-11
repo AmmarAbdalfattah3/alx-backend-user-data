@@ -14,7 +14,7 @@ import bcrypt
 class Auth:
     """
     Auth class to interact with the authentication database.
-    
+
     Attributes:
         _db (DB): Private instance of the DB class
         used to interact with the database.
