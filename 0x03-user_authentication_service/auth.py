@@ -56,6 +56,7 @@ class Auth:
             # User does not exist, proceed with registration
             hashed_password = self._hash_password(password)
             new_user = self._db.add_user(
-                        email=email, hashed_password=hashed_password.decode('utf-8')
+                        email=email,
+                        hashed_password=hashed_password.decode('utf-8')
                     )
             return new_user
