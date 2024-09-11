@@ -4,10 +4,9 @@ Auth module
 """
 
 
-import bcrypt
 from db import DB
 from user import User
-from sqlalchemy.orm.exc import NoResultFound
+import bcrypt
 
 
 class Auth:
@@ -16,14 +15,21 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def _hash_password(self, password: str) -> str:
-        """
-        Hashes the input password using bcrypt with a generated salt.
+    import bcrypt
+
+    def _hash_password(password: str) -> bytes:
+        """Hash a password using bcrypt
 
         Args:
-            password (str): The password string to be hashed.
+            password (str): The password to hash
 
         Returns:
-            bytes: The salted hash of the input password.
+            bytes: The salted hash of the password
         """
-        return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        # Convert the password string to bytes
+        password_bytes = password.encode('utf-8')
+
+        # Generate a salted hash using bcrypt
+        hashed_password = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+
+        return hashed_password
