@@ -4,12 +4,12 @@ Auth module
 """
 
 
+import uuid
+import bcrypt
 from db import DB
 from user import User
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
-import bcrypt
-import uuid
 
 
 def _generate_uuid() -> str:
