@@ -45,5 +45,43 @@ def register_user():
         return jsonify({"message": "email already registered"}), 400
 
 
+@app.route('/sessions', methods=['POST'])
+def login():
+    """
+    POST /sessions route to log in a user.
+    Sets a session ID cookie if login is successful.
+    Returns a JSON response indicating the login status.
+
+    Returns:
+        JSON response: Either a success or error message.
+    """
+    # Get email and password from the form data
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    # Check if email or password is missing
+    if not email or not password:
+        return jsonify({"message": "Missing email or password"}), 400
+
+    # Validate login credentials
+    if AUTH.valid_login(email, password):
+        # Create a new session and get the session ID
+        session_id = AUTH.create_session(email)
+
+        # Create a response with a session_id cookie
+        response = make_response(
+            jsonify({"email": email, "message": "logged in"})
+        )
+        response.set_cookie('session_id', session_id)
+        return response
+    else:
+        # If login fails, return 401 Unauthorized
+        abort(401)
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
