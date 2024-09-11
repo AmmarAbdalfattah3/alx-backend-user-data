@@ -92,4 +92,4 @@ class Auth:
                 return True
         except NoResultFound:
             return False
-        return False<F3><F2>
+        return False
