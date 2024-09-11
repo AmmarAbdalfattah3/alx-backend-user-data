@@ -4,6 +4,7 @@
 
 from db import DB
 from user import User
+from sqlalchemy.exc import NoResultFound
 import bcrypt
 
 
@@ -16,7 +17,7 @@ class Auth:
         """
         self._db = DB()
 
-    def _hash_password(password: str) -> bytes:
+    def _hash_password(self, password: str) -> bytes:
         """
         Hashes the input password using bcrypt with a generated salt.
 
