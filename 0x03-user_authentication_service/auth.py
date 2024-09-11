@@ -16,7 +16,7 @@ class Auth:
         Initialize the Auth instance with a DB instance.
         """
         self._db = DB()
-
+    @property
     def _hash_password(self, password: str) -> bytes:
         """
         Hashes the input password using bcrypt with a generated salt.
