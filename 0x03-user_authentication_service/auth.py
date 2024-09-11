@@ -21,6 +21,19 @@ def _generate_uuid() -> str:
     """
     return str(uuid.uuid4())
 
+def _hash_password(self, password: str) -> bytes:
+        """Hash a password using bcrypt.
+
+        Args:
+            password (str): The password to hash.
+
+        Returns:
+            bytes: The salted hash of the password.
+        """
+        password_bytes = password.encode('utf-8')
+        hashed_password = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+        return hashed_password
+
 
 class Auth:
     """
@@ -36,19 +49,6 @@ class Auth:
         Initializes the Auth class with a new DB instance.
         """
         self._db = DB()
-
-    def _hash_password(self, password: str) -> bytes:
-        """Hash a password using bcrypt.
-
-        Args:
-            password (str): The password to hash.
-
-        Returns:
-            bytes: The salted hash of the password.
-        """
-        password_bytes = password.encode('utf-8')
-        hashed_password = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
-        return hashed_password
 
     def register_user(self, email: str, password: str) -> User:
         """Register a new user.
