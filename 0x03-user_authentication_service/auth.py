@@ -139,5 +139,5 @@ class Auth:
             return user
         except NoResultFound:
             # If no user is found, return None
-        return None
+            return None
 
