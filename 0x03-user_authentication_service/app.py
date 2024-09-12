@@ -73,5 +73,35 @@ def login():
         abort(401, description="Invalid login credentials")
 
 
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def logout():
+    """
+    DELETE /sessions route to log out a user.
+    The request is expected to contain the session ID as a cookie.
+
+    If the session ID is valid, the session is destroyed,
+    and the user is redirected.
+
+    If the session ID is invalid or user does not exist,
+    respond with a 403 status.
+
+    Returns:
+        Flask Response: Redirects to the homepage or returns a 403 error.
+    """
+    session_id = request.cookies.get('session_id')
+
+    if not session_id:
+        abort(403)
+
+    user = AUTH.get_user_from_session_id(session_id)
+
+    if not user:
+        abort(403)
+
+    AUTH.destroy_session(user.id)
+
+    return redirect('/')
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
