@@ -148,7 +148,7 @@ def get_reset_password_token():
 
     try:
         reset_token = AUTH.get_reset_password_token(email)
-    except ValueError
+    except ValueError:
         abort(403, description="Email not registered")
 
     return jsonify({"email": email, "reset_token": reset_token}), 200
