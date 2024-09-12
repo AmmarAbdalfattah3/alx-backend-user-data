@@ -140,4 +140,3 @@ class Auth:
         except NoResultFound:
             # If no user is found, return None
             return None
-
